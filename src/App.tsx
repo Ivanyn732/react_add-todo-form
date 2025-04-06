@@ -74,6 +74,11 @@ export const App = () => {
     setTodos(todosFromServer);
   }, []);
 
+  const todosWithUsers = todos.map(todo => ({
+    ...todo,
+    user: users.find(user => user.id === todo.userId),
+  }));
+
   return (
     <div className="App">
       <h1>Add todo form</h1>
@@ -116,12 +121,12 @@ export const App = () => {
           {userError && <span className="error">{userError}</span>}
         </div>
 
-        <button type="submit" data-cy="submitButton" onClick={handleAddTodo}>
+        <button type="submit" data-cy="submitButton">
           Add
         </button>
       </form>
 
-      <TodoList todos={todos} />
+      <TodoList todos={todosWithUsers} />
     </div>
   );
 };
